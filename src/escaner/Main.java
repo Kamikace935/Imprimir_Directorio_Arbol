@@ -2,15 +2,19 @@ package escaner;
 
 import java.io.File;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
         File fichero;
+
         System.out.print("Introduce la ruta que quieres revisar: ");
         fichero = new File(teclado.nextLine());
-        System.out.print(imprimeDirectorioArbol(fichero));
+
         teclado.close();
     }
 
@@ -49,10 +53,18 @@ public class Main {
         sb.append(sangradoString(sangrado));
         sb.append("+--");
         sb.append(archivo.getName());
+        sb.append(pesoArchivo(archivo));
+        //sb.append("");
         sb.append("\n");
     }
 
     private static String sangradoString(int sangrado) {
         return "|  ".repeat(Math.max(0, sangrado));
     }
+
+    private static String pesoArchivo(File archivo) {
+        double peso = (double)archivo.length()/1024;
+        return "("+ peso + " kb)";
+    }
+    
 }
