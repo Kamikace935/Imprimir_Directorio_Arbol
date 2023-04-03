@@ -15,6 +15,7 @@ public class Main {
         System.out.print("Introduce la ruta que quieres revisar: ");
         fichero = new File(teclado.nextLine());
 
+        System.out.print(imprimeDirectorioArbol(fichero));
         teclado.close();
     }
 
@@ -35,6 +36,8 @@ public class Main {
          sb.append(sangradoString(sangrado));
          sb.append("+--");
          sb.append(fichero.getName());
+         sb.append(pesoArchivo(fichero));
+         sb.append(ultimaModificacion(fichero));
          sb.append("/");
          sb.append("\n");
          File[] ficheros = fichero.listFiles();
@@ -54,7 +57,7 @@ public class Main {
         sb.append("+--");
         sb.append(archivo.getName());
         sb.append(pesoArchivo(archivo));
-        //sb.append("");
+        sb.append(ultimaModificacion(archivo));
         sb.append("\n");
     }
 
@@ -66,5 +69,23 @@ public class Main {
         double peso = (double)archivo.length()/1024;
         return "("+ peso + " kb)";
     }
-    
+
+    private static String ultimaModificacion(File archivo) {
+        long lm = archivo.lastModified();
+
+        Date d = new Date(lm);
+        Calendar c = new GregorianCalendar();
+        c.setTime(d);
+
+        String dia, mes, anno, hora, minuto, segundo;
+
+        dia = Integer.toString(c.get(Calendar.DATE));
+        mes = Integer.toString(c.get(Calendar.MONTH));
+        anno = Integer.toString(c.get(Calendar.YEAR));
+        hora = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
+        minuto = Integer.toString(c.get(Calendar.MINUTE));
+        segundo = Integer.toString(c.get(Calendar.SECOND));
+
+        return " - "+ hora + ":" + minuto + ":" + segundo + " " + dia + "/" + mes +"/" + anno;
+    }
 }
