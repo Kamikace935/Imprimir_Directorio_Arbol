@@ -2,8 +2,9 @@ package escaner;
 
 import java.io.File;
 
-
+import java.util.Objects;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
@@ -27,7 +28,7 @@ public class Main {
         return sb.toString();
     }
 
-    private static String imprimeDirectorioArbol(File fichero, int posicion, StringBuilder sb) {
+    private static void imprimeDirectorioArbol(File fichero, int posicion, StringBuilder sb) {
          if(!fichero.isDirectory()){
              throw new IllegalArgumentException("El fichero no es un directorio");
          }
@@ -45,5 +46,14 @@ public class Main {
          }
     }
 
-    
+    private static void imprimirArchivo(File archivo, int posicion, StringBuilder sb) {
+        sb.append(posicionString(posicion));
+        sb.append("+--");
+        sb.append(archivo.getName());
+        sb.append("\n");
+    }
+
+    private static String posicionString(int posicion) {
+        return "|  ".repeat(Math.max(0, posicion));
+    }
 }
