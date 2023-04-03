@@ -11,19 +11,39 @@ public class Main {
         System.out.print("Introduce la ruta que quieres revisar: ");
         fichero = new File(teclado.nextLine());
 
-        System.out.print(printDirectoryTree(fichero));
+        System.out.print(imprimeDirectorioArbol(fichero));
 
         teclado.close();
     }
 
 
-    public static String printDirectoryTree(File fichero){
+    public static String imprimeDirectorioArbol(File fichero){
+        if (!fichero.isDirectory()){
+            throw new IllegalArgumentException("El fichero no es un directorio");
+        }
         int posicion = 0;
-
-        return "";
+        StringBuilder sb = new StringBuilder();
+        imprimeDirectorioArbol(fichero, posicion, sb);
+        return sb.toString();
     }
 
-    private static String printDirectoryTree(File fichero,int posicion, StringBuilder sb) {
-        git 
+    private static String imprimeDirectorioArbol(File fichero, int posicion, StringBuilder sb) {
+         if(!fichero.isDirectory()){
+             throw new IllegalArgumentException("El fichero no es un directorio");
+         }
+         sb.append(posicionString(posicion));
+         sb.append("+--");
+         sb.append(fichero.getName());
+         sb.append("/");
+         sb.append("\n");
+         for(File archivo : fichero.listFiles()) {
+             if(archivo.isDirectory()) {
+                 imprimeDirectorioArbol(archivo, posicion + 1, sb);
+             } else {
+                 imprimirArchivo(archivo, posicion + 1, sb);
+             }
+         }
     }
+
+    
 }
